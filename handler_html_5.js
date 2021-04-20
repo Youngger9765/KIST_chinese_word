@@ -77,23 +77,23 @@ module.exports.landingPage = (event, context, callback) => {
 
         #cardSlots {
         margin: 0 auto 3em auto;
-        background: navy;
+        background: antiquewhite;
         float: right;
         }
 
         /* The initial pile of unsorted cards */
 
         #cardPile {
-        width: 30%;
-        height: 80%;
+        width: 25%;
+        height: 50%;
         margin: 0 auto;
-        background: green;
+        background: darkseagreen;
         float: left;
         }
 
         #cardSlots {
         width: 70%;
-        height: 80%;
+        height: 50%;
         padding: .85em;
         border: 2px solid #333;
         -moz-border-radius: 10px;
@@ -109,7 +109,7 @@ module.exports.landingPage = (event, context, callback) => {
         #cardSlots div, #cardPile div {
         float: left;
         width: 100%;
-        height: 18%;
+        height: 30%;
         padding: .85em;
         padding-top: 40px;
         padding-bottom: 0;
@@ -292,7 +292,7 @@ module.exports.landingPage = (event, context, callback) => {
             // and reset the cards for another go
 
             if ( correctCards == 3 ) {
-                $('#successMessage').show();
+                $('#successMessage').hide();
                 $('#successMessage').animate( {
                 left: '380px',
                 top: '200px',
