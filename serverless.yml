@@ -61,6 +61,12 @@ functions:
   hello:
     handler: handler.hello
 
+  handler_html_0_word_list:
+    handler: handler_html_0_word_list.landingPage
+    events:
+      - http:
+          method: get
+          path: landing-page-0-word-list
 
   html_1:
     handler: handler_html_1.landingPage
@@ -103,6 +109,10 @@ functions:
       - http:
           method: get
           path: landing-page-6
+
+
+
+          
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
