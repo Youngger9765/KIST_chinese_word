@@ -104,7 +104,6 @@ module.exports.landingPage = (event, context, callback) => {
             font-size: 4em;
             text-align: center;
             line-height: 100px;
-            width: 100%;
             max-width: 100%;
             display: flex;
         }
