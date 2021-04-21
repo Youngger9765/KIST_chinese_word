@@ -13,23 +13,20 @@ module.exports.landingPage = (event, context, callback) => {
         ans = `${event.queryStringParameters.ans}`;
     }
 
-    const html = `
-  <html>
-    <head>
+    let head_html = `
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
         <link rel="stylesheet" type="text/css" href="style.css">
-
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
-    
-        </head>
-    <style>
+    `;
+
+    let style_html = `
         h1 { color: #73757d; }
+
         /* Add some margin to the page and set a default font and colour */
 
         body {
@@ -183,8 +180,9 @@ module.exports.landingPage = (event, context, callback) => {
         box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
         padding: 20px;
         }
-    </style>
-    <body>
+    `;
+
+    let body_html = `
         <div class="container">
             <h1>練習：${dynamicHtml}</h1>
             <h1>詞意選配</h1>
@@ -193,18 +191,13 @@ module.exports.landingPage = (event, context, callback) => {
         </div>
 
         <div class="container">
-            <h1>TODO: 連連看！</h1>
-
             <div id="content">
-
                 <div id="cardPile"> </div>
                 <div id="cardSlots"> </div>
-
                 <div id="successMessage">
                     <h2>Congratulations!</h2>
                     <button onclick="init()">Play Again</button>
                 </div>
-
             </div>
 
         </div>
@@ -212,108 +205,123 @@ module.exports.landingPage = (event, context, callback) => {
         <div class="container">
             <div id="next" class="btn btn-lg btn-success">下一題</div>
         </div>
+    `;
 
-    </body>
+    let script_html = `
+        <script language="JavaScript" type="text/javascript">
+            var correctCards = 0;
+            $( init );
 
-    <script language="JavaScript" type="text/javascript">
-        var correctCards = 0;
-        $( init );
+            function init() {
+                $('#next').hide();
 
-        function init() {
-            $('#next').hide();
-
-            // Hide the success message
-            $('#successMessage').hide();
-            $('#successMessage').css( {
-                left: '580px',
-                top: '250px',
-                width: 0,
-                height: 0
-            } );
-
-            // Reset the game
-            correctCards = 0;
-            $('#cardPile').html( '' );
-            $('#cardSlots').html( '' );
-
-            // Create the pile of shuffled cards
-            var numbers = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
-            var terms = [
-                '均ㄧ',
-                '均衡',
-                '平均' 
-            ];
-            <!--numbers.sort( function() { return Math.random() - .5 } );-->
-
-            for ( var i=0; i<3; i++ ) {
-                $('<div>' + terms[i] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
-
-                stack: '#cardPile div',
-                cursor: 'move',
-                revert: true
-                } );
-            }
-
-            // Create the card slots
-            var words = [ 
-                '()教育平台', 
-                '每天()五蔬果',
-                '()每五人就有一人中獎' 
-            ];
-            for ( var i=1; i<=3; i++ ) {
-                $('<div>' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
-                accept: '#cardPile div',
-                hoverClass: 'hovered',
-                drop: handleCardDrop
-                } );
-            }
-
-            }
-
-            function handleCardDrop( event, ui ) {
-            var slotNumber = $(this).data( 'number' );
-            var cardNumber = ui.draggable.data( 'number' );
-
-            // If the card was dropped to the correct slot,
-            // change the card colour, position it directly
-            // on top of the slot, and prevent it being dragged
-            // again
-
-            if ( slotNumber == cardNumber ) {
-                ui.draggable.addClass( 'correct' );
-                ui.draggable.draggable( 'disable' );
-                $(this).droppable( 'disable' );
-                ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
-                ui.draggable.draggable( 'option', 'revert', false );
-                correctCards++;
-            }
-
-            // If all the cards have been placed correctly then display a message
-            // and reset the cards for another go
-
-            if ( correctCards == 3 ) {
+                // Hide the success message
                 $('#successMessage').hide();
-                $('#successMessage').animate( {
-                left: '380px',
-                top: '200px',
-                width: '400px',
-                height: '100px',
-                opacity: 1
+                $('#successMessage').css( {
+                    left: '580px',
+                    top: '250px',
+                    width: 0,
+                    height: 0
                 } );
 
-                $('#next').show();
+                // Reset the game
+                correctCards = 0;
+                $('#cardPile').html( '' );
+                $('#cardSlots').html( '' );
+
+                // Create the pile of shuffled cards
+                var numbers = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+                var terms = [
+                    '均ㄧ',
+                    '均衡',
+                    '平均'
+                ];
+                <!--numbers.sort( function() { return Math.random() - .5 } );-->
+
+                for ( var i=0; i<3; i++ ) {
+                    $('<div>' + terms[i] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+
+                    stack: '#cardPile div',
+                    cursor: 'move',
+                    revert: true
+                    } );
+                }
+
+                // Create the card slots
+                var words = [
+                    '()教育平台',
+                    '每天()五蔬果',
+                    '()每五人就有一人中獎'
+                ];
+                for ( var i=1; i<=3; i++ ) {
+                    $('<div>' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
+                    accept: '#cardPile div',
+                    hoverClass: 'hovered',
+                    drop: handleCardDrop
+                    } );
+                }
+
+                }
+
+                function handleCardDrop( event, ui ) {
+                var slotNumber = $(this).data( 'number' );
+                var cardNumber = ui.draggable.data( 'number' );
+
+                // If the card was dropped to the correct slot,
+                // change the card colour, position it directly
+                // on top of the slot, and prevent it being dragged
+                // again
+
+                if ( slotNumber == cardNumber ) {
+                    ui.draggable.addClass( 'correct' );
+                    ui.draggable.draggable( 'disable' );
+                    $(this).droppable( 'disable' );
+                    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+                    ui.draggable.draggable( 'option', 'revert', false );
+                    correctCards++;
+                }
+
+                // If all the cards have been placed correctly then display a message
+                // and reset the cards for another go
+
+                if ( correctCards == 3 ) {
+                    $('#successMessage').hide();
+                    $('#successMessage').animate( {
+                    left: '380px',
+                    top: '200px',
+                    width: '400px',
+                    height: '100px',
+                    opacity: 1
+                    } );
+
+                    $('#next').show();
+                }
+
             }
+        </script>
 
-        }
-    </script>
+        <script language="JavaScript" type="text/javascript">
 
-    <script language="JavaScript" type="text/javascript">
-        
-        $("#next").click(function(){
-            window.location = "https://dpnu7opif2.execute-api.us-east-1.amazonaws.com/dev/landing-page-6?name=${dynamicHtml}&ans=${ans}";
-        });
-    </script>
-  </html>`;
+            $("#next").click(function(){
+                window.location = "https://dpnu7opif2.execute-api.us-east-1.amazonaws.com/dev/landing-page-6?name=${dynamicHtml}&ans=${ans}";
+            });
+        </script>
+    `;
+
+    const html = `
+        <html>
+            <head>
+                ${head_html}
+            </head>
+            <style>
+                ${style_html}
+            </style>
+            <body>
+                ${body_html}
+            </body>
+            ${script_html}
+        </html>
+    `;
 
     const response = {
         statusCode: 200,
