@@ -31,7 +31,7 @@ module.exports.landingPage = (event, context, callback) => {
         // const url_html = "<div class='btn btn-primary btn-lg next_link' data=" + next_url + ">" + words_list[index] + "</div> <hr>";
         // const url_html = '<div data="' + words_list[index] + '" class="btn btn-primary btn-lg next_link col-* col-sm-6 col-lg-4 strLine Achar"><div class="cross"></div><div class="front">' + words_list[index] +'</div></div>'
         const url_html = `
-            <div class="col-* col-sm-6 col-lg-4 strLine Achar next_link"
+            <div class="col-sm-3 col-lg-4 strLine Achar next_link"
                 data ="${words_list[index]}"
             >
                 <div class="cross"></div>
