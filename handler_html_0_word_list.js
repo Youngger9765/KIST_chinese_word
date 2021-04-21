@@ -101,7 +101,6 @@ module.exports.landingPage = (event, context, callback) => {
         }
         .Achar {
             margin-bottom: 20px;
-            font-weight: bolder;
             font-size: 4em;
             text-align: center;
             line-height: 100px;
@@ -128,25 +127,6 @@ module.exports.landingPage = (event, context, callback) => {
             font-family: DFKai-sb;
             padding-bottom: 50px;
         }
-
-
-
-        .logingBar{
-            font-weight: bold;
-        }
-        .loginbtn{
-            margin-top: 10px!important;
-            font-weight: bold!important;
-            color: white!important;
-            background-color: green !important;
-            padding: 5px 5px !important;
-            border-radius: 2rem!important;
-
-        }
-        .inputbar{
-            font-size: small;
-        }
-
     `;
 
     
