@@ -263,7 +263,6 @@ module.exports.landingPage = (event, context, callback) => {
     </script >
 
     <script>
-        $("#next").hide();
         $("#submit_ans_btn").click(function(){
             input_value = $('#input_val').val();
             if (input_value == '${ans}') {
