@@ -37,7 +37,6 @@ module.exports.landingPage = (event, context, callback) => {
                 <div class="cross"></div>
                 <div class="front">${words_list[index]}</div>
             </div>
-            <hr>
         `;
         next_url_list_html = next_url_list_html + url_html;
     }
